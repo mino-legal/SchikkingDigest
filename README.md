@@ -4,7 +4,7 @@ Een wekelijkse digest van Nederlandse rechtspraak over schikkingen en minnelijke
 
 De app haalt wekelijks automatisch uitspraken op uit het civiele recht en het advocatentuchtrecht, filtert ze op relevantie voor de schikkingspraktijk met behulp van Claude AI, en toont de resultaten als overzichtelijke kaarten met een groeiende lessenlijst.
 
-Bekijk de live versie op [schikkenopdegang.nl](https://www.schikkenopdegang.nl).
+Bekijk de live versie op [schikken.mino.law](https://schikken.mino.law).
 
 ---
 
@@ -60,7 +60,7 @@ PUBLIC_SUPABASE_URL=https://<project>.supabase.co
 SUPABASE_SERVICE_KEY=eyJhbGciOi...
 RESEND_API_KEY=re_...
 RESEND_FROM_EMAIL=Schikken <schikken@mino.law>
-NEXT_PUBLIC_SITE_URL=https://www.schikkenopdegang.nl
+NEXT_PUBLIC_SITE_URL=https://schikken.mino.law
 ```
 
 Draai de SQL-migratie eenmalig (in Supabase SQL editor of via de CLI):

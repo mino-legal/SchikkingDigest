@@ -3,7 +3,7 @@ import { listConfirmed, markSent } from '@/lib/subscriptions';
 import { sendDigestEmail } from '@/lib/email';
 
 function siteUrl(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.schikkenopdegang.nl').replace(/\/$/, '');
+  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://schikken.mino.law').replace(/\/$/, '');
 }
 
 export interface FanOutResult {

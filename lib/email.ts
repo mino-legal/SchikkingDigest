@@ -17,7 +17,7 @@ function fromEmail(): string {
 }
 
 function siteUrl(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.schikkenopdegang.nl').replace(/\/$/, '');
+  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://schikken.mino.law').replace(/\/$/, '');
 }
 
 // Palette mirrors tailwind.config.js brand tokens so the email matches the site.
@@ -35,6 +35,48 @@ const C = {
 };
 const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 const FONT_MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace";
+
+// Mino brand palette for the footer block (mirrors the site footer).
+const MINO = {
+  bg: '#2D001D',
+  text: '#DDE6FF',
+  textMuted: 'rgba(221,230,255,0.85)',
+  textDim: 'rgba(221,230,255,0.6)',
+  cardBg: 'rgba(221,230,255,0.06)',
+  cardBorder: 'rgba(221,230,255,0.18)',
+  accent: '#E87A45',
+};
+
+function minoFooterHtml(): string {
+  return `
+    <div style="background-color:${MINO.bg};padding:36px 32px;font-family:${FONT};color:${MINO.text};">
+      <p style="margin:0 0 4px 0;font-size:16px;font-weight:700;letter-spacing:0.04em;color:${MINO.text};font-family:${FONT};">
+        mino
+      </p>
+      <p style="margin:0 0 14px 0;font-size:14px;line-height:1.6;color:${MINO.textMuted};font-family:${FONT};">
+        SchikkingsDigest is gemaakt door
+        <a href="https://www.linkedin.com/in/lucaslieverse/" style="color:${MINO.text};text-decoration:underline;font-weight:600;">Lucas Lieverse</a>,
+        docent-onderzoeker HBO-Rechten en gepromoveerd op de Nederlandse schikkingspraktijk. Hij geeft trainingen en lezingen aan rechters, advocaten en mediators, en bouwde deze digest om zelf bij te houden wat de (tucht)rechtspraak ons over schikken leert.
+      </p>
+      <p style="margin:0 0 18px 0;font-size:13px;line-height:1.6;color:${MINO.textDim};font-family:${FONT};">
+        Mino is een community van juristen die met AI hun eigen praktijktools bouwen.
+      </p>
+      <div style="background-color:${MINO.cardBg};border:1px solid ${MINO.cardBorder};border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;color:${MINO.textMuted};font-family:${FONT};">
+        <span style="color:${MINO.text};font-weight:600;">Wil je ook leren dit soort tools te bouwen?</span>
+        Meld je aan voor de volgende
+        <a href="https://mino.law/workshop" style="color:${MINO.text};text-decoration:underline;text-decoration-color:${MINO.accent};font-weight:600;">Claude Code workshop</a>.
+      </div>
+    </div>`;
+}
+
+function minoFooterText(): string {
+  return `mino
+SchikkingsDigest is gemaakt door Lucas Lieverse (https://www.linkedin.com/in/lucaslieverse/), docent-onderzoeker HBO-Rechten en gepromoveerd op de Nederlandse schikkingspraktijk. Hij geeft trainingen en lezingen aan rechters, advocaten en mediators, en bouwde deze digest om zelf bij te houden wat de (tucht)rechtspraak ons over schikken leert.
+
+Mino is een community van juristen die met AI hun eigen praktijktools bouwen.
+
+Wil je ook leren dit soort tools te bouwen? Meld je aan voor de volgende Claude Code workshop: https://mino.law/workshop`;
+}
 
 function escape(s: string): string {
   return s
@@ -61,22 +103,22 @@ function confirmHtml(opts: SendConfirmationOptions): string {
   return `<!doctype html>
 <html lang="nl"><head><meta charset="utf-8" /><title>Bevestig je inschrijving</title></head>
 <body style="margin:0;padding:0;background-color:${C.bg};font-family:${FONT};">
-  <div style="max-width:560px;margin:0 auto;padding:40px 24px;">
-    <div style="background-color:${C.white};border:1px solid ${C.hairline};border-radius:12px;padding:32px;">
-      <h1 style="margin:0 0 12px 0;font-size:20px;font-weight:700;color:${C.darkgray};">Bevestig je inschrijving</h1>
-      <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:${C.mutedText};">
-        Klik op de knop hieronder om je in te schrijven voor de wekelijkse SchikkingDigest. Elke donderdag ontvang je de relevante uitspraken over schikken en minnelijke regelingen.
-      </p>
-      <p style="margin:0 0 24px 0;">
-        <a href="${escape(opts.confirmUrl)}" style="display:inline-block;background-color:${C.blue};color:${C.white};text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;font-size:14px;">Bevestig inschrijving</a>
-      </p>
-      <p style="margin:0;font-size:12px;color:${C.mutedText};line-height:1.5;">
-        Heb je deze e-mail niet aangevraagd? Negeer hem dan; zonder bevestiging gebeurt er niets.
-      </p>
+  <div style="max-width:560px;margin:0 auto;">
+    <div style="padding:40px 24px 24px 24px;">
+      <div style="background-color:${C.white};border:1px solid ${C.hairline};border-radius:12px;padding:32px;">
+        <h1 style="margin:0 0 12px 0;font-size:20px;font-weight:700;color:${C.darkgray};">Bevestig je inschrijving</h1>
+        <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:${C.mutedText};">
+          Klik op de knop hieronder om je in te schrijven voor de wekelijkse SchikkingDigest. Elke donderdag ontvang je de relevante uitspraken over schikken en minnelijke regelingen.
+        </p>
+        <p style="margin:0 0 24px 0;">
+          <a href="${escape(opts.confirmUrl)}" style="display:inline-block;background-color:${C.blue};color:${C.white};text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;font-size:14px;">Bevestig inschrijving</a>
+        </p>
+        <p style="margin:0;font-size:12px;color:${C.mutedText};line-height:1.5;">
+          Heb je deze e-mail niet aangevraagd? Negeer hem dan; zonder bevestiging gebeurt er niets.
+        </p>
+      </div>
     </div>
-    <p style="margin:16px 0 0 0;text-align:center;font-size:11px;color:${C.mutedText};">
-      SchikkingDigest — een community-tool via <a href="https://mino.law" style="color:${C.mutedText};">mino.law</a>
-    </p>
+    ${minoFooterHtml()}
   </div>
 </body></html>`;
 }
@@ -89,7 +131,8 @@ ${opts.confirmUrl}
 
 Heb je deze e-mail niet aangevraagd? Negeer hem dan.
 
-SchikkingDigest — via mino.law`;
+---
+${minoFooterText()}`;
 }
 
 export async function sendConfirmationEmail(opts: SendConfirmationOptions): Promise<void> {
@@ -186,11 +229,12 @@ function digestHtml(opts: SendDigestOptions): string {
         Samenvattingen zijn door AI gegenereerd. Lees voor je je erop beroept altijd de volledige uitspraak.
       </p>
       <p style="margin:0;font-size:11px;color:${C.mutedText};font-family:${FONT};">
-        <a href="${escape(siteUrl())}" style="color:${C.mutedText};text-decoration:underline;">schikkenopdegang.nl</a>
+        <a href="${escape(siteUrl())}" style="color:${C.mutedText};text-decoration:underline;">schikken.mino.law</a>
         ·
         <a href="${escape(unsubscribeUrl)}" style="color:${C.mutedText};text-decoration:underline;">Uitschrijven</a>
       </p>
     </div>
+    ${minoFooterHtml()}
   </div>
 </body></html>`;
 }
@@ -219,7 +263,10 @@ ${body}
 
 ---
 Samenvattingen door AI. Lees altijd de volledige uitspraak.
-Uitschrijven: ${unsubscribeUrl}`;
+Uitschrijven: ${unsubscribeUrl}
+
+---
+${minoFooterText()}`;
 }
 
 export async function sendDigestEmail(opts: SendDigestOptions): Promise<void> {

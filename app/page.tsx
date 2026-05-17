@@ -207,7 +207,7 @@ export default function Home() {
       <header className="bg-brand-darkgray border-b border-black/30 sticky top-0 z-10">
         <div className="px-6 sm:px-8 h-16 flex items-center justify-between gap-4">
           <a
-            href="https://www.schikkenopdegang.nl"
+            href="/"
             className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight hover:text-white/70 transition-colors"
           >
             Schikkingslessen uit
@@ -617,20 +617,7 @@ export default function Home() {
               Lucas Lieverse
             </a>
             , docent-onderzoeker HBO-Rechten en gepromoveerd op de Nederlandse
-            schikkingspraktijk (
-            <a
-              href="https://www.schikkenopdegang.nl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2 transition-colors hover:opacity-80"
-              style={{
-                color: "hsl(221 100% 93% / 0.85)",
-                textDecorationColor: "hsl(221 100% 93% / 0.3)",
-              }}
-            >
-              schikkenopdegang.nl
-            </a>
-            ). Hij geeft trainingen en lezingen aan rechters, advocaten en
+            schikkingspraktijk. Hij geeft trainingen en lezingen aan rechters, advocaten en
             mediators, en bouwde deze digest om zelf bij te houden wat de
             (tucht)rechtspraak ons over schikken leert.
           </p>
