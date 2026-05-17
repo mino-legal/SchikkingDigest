@@ -5,7 +5,11 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          blue:       '#2081C3',
+          // Accent ink — Mino burgundy (hsl(321 100% 21%))
+          // Replaces the original #2081C3 SaaS blue so links, badges,
+          // labels, active states, and the refresh button align with
+          // the Mino strip + footer that frame the page.
+          blue:       '#6B0049',
           terracotta: '#A63D33',
           darkred:    '#73241D',
           olive:      '#C0BDA5',
@@ -14,7 +18,10 @@ module.exports = {
           bg:         '#F3F4F6',
           'bg-soft':  '#F5F5F5',
           'bg-gray':  '#F9FAFB',
-          'bg-blue':  '#EFF6FB',
+          // Soft accent surface — Mino light blue (hsl(221 100% 93%))
+          // The companion to brand.blue: disclaimer card, sort pill,
+          // rechtspraak badge background. Same value used in the strip.
+          'bg-blue':  '#DCE7FF',
           'bg-red':   '#FDF3F2',
           white:      '#FFFFFF',
         },
