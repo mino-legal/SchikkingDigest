@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { RefreshCw, Lock, Info } from "lucide-react";
 import DigestCard from "@/components/DigestCard";
+import SubscribeForm from "@/components/SubscribeForm";
 import { DigestItem, DigestResponse, Les } from "@/types";
 
 function formatDatum(iso: string) {
@@ -331,6 +332,11 @@ export default function Home() {
             </button>
           </div>
         </details>
+
+        {/* Inschrijfformulier */}
+        <div className="mb-6">
+          <SubscribeForm />
+        </div>
 
         {/* Error */}
         {fout && (

@@ -54,6 +54,19 @@ ANTHROPIC_API_KEY=sk-ant-...
 BLOB_READ_WRITE_TOKEN=vercel_blob_...
 DIGEST_SECRET=een-zelf-te-kiezen-geheim
 CRON_SECRET=een-zelf-te-kiezen-geheim
+
+# Voor de e-mailinschrijvingen (shared Mino Supabase + Resend)
+PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+SUPABASE_SERVICE_KEY=eyJhbGciOi...
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL=Schikken <schikken@mino.law>
+NEXT_PUBLIC_SITE_URL=https://www.schikkenopdegang.nl
+```
+
+Draai de SQL-migratie eenmalig (in Supabase SQL editor of via de CLI):
+
+```bash
+supabase db push  # of plak supabase/migrations/001_create_schikking_subscriptions.sql
 ```
 
 Start de dev-server:
@@ -78,8 +91,12 @@ curl -X POST http://localhost:3000/api/digest \
 |---|---|---|
 | `/api/digest` | GET | Geeft de opgeslagen digest terug als JSON |
 | `/api/digest` | POST | Start een nieuwe digest-run (vereist `secret` in body) |
-| `/api/cron/refresh` | GET | Wordt aangeroepen door de Vercel cron job (vereist `CRON_SECRET` via `Authorization: Bearer`) |
+| `/api/cron/refresh` | GET | Wordt aangeroepen door de Vercel cron job (vereist `CRON_SECRET` via `Authorization: Bearer`); draait de digest en stuurt de e-mail naar alle bevestigde abonnees |
 | `/api/reset` | POST | Reset de opgeslagen digest (alleen voor ontwikkeling) |
+| `/api/subscribe` | POST | `{email}` → maakt een pending inschrijving aan en stuurt een bevestigingsmail |
+| `/api/unsubscribe` | POST | RFC 8058 one-click uitschrijven (gebruikt door mailclients via `List-Unsubscribe-Post`) |
+| `/bevestigen?token=…` | page | Bevestigt een inschrijving via de link uit de e-mail |
+| `/uitschrijven?token=…` | page | Schrijft een abonnee uit via de link onderaan elke digest |
 
 ---
 

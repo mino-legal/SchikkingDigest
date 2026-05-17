@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { runDigest } from '@/lib/digest';
+import { fanOutDigest } from '@/lib/digest-email';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function GET(req: NextRequest) {
   // Vercel cron jobs zenden Authorization: Bearer <CRON_SECRET> mee zodra die env var is gezet.
@@ -18,7 +19,11 @@ export async function GET(req: NextRequest) {
   try {
     const response = await runDigest();
     console.log(`Cron-digest klaar: ${response.items.length} items, ${response.lessen.length} lessen totaal.`);
-    return NextResponse.json({ ok: true, aantal: response.items.length });
+
+    const fanOut = await fanOutDigest(response);
+    console.log(`Digest-mailings: ${fanOut.sent}/${fanOut.attempted} verstuurd, ${fanOut.failed} mislukt.`);
+
+    return NextResponse.json({ ok: true, aantal: response.items.length, mailings: fanOut });
   } catch (error) {
     console.error('Cron digest fout:', error);
     return NextResponse.json({ fout: 'Cron-run mislukt', details: String(error) }, { status: 500 });
