@@ -6,7 +6,7 @@ import { DigestItem } from '@/types';
 
 const bronConfig: Record<DigestItem['bron'], { label: string; icon: React.ElementType; badgeClass: string }> = {
   rechtspraak: { label: 'Rechtspraak.nl', icon: BookOpen, badgeClass: 'text-brand-blue bg-brand-bg-blue border-brand-blue/15' },
-  tuchtrecht:  { label: 'Tuchtrecht',     icon: Gavel,    badgeClass: 'text-brand-terracotta bg-brand-bg-red border-brand-terracotta/15' },
+  tuchtrecht:  { label: 'Tuchtrecht',     icon: Gavel,    badgeClass: 'text-brand-blue bg-brand-blue/8 border-brand-blue/15' },
 };
 
 function formatDatum(datum: string): string {

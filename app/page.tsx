@@ -63,11 +63,20 @@ export default function Home() {
   const [tokenInput, setTokenInput] = useState("");
   const [activeTab, setActiveTab] = useState<Tab>("week");
   const [lessenSort, setLessenSort] = useState<LessenSort>("categorie");
+  const [adminMode, setAdminMode] = useState(false);
   const tokenRef = useRef<HTMLInputElement>(null);
   const disclaimerRef = useRef<HTMLDetailsElement>(null);
 
   useEffect(() => {
     laadOpgeslagen();
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("admin")) {
+      localStorage.setItem("digest_admin", "1");
+      setAdminMode(true);
+    } else if (localStorage.getItem("digest_admin") === "1") {
+      setAdminMode(true);
+    }
   }, []);
   useEffect(() => {
     if (showTokenInput) tokenRef.current?.focus();
@@ -203,84 +212,32 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Header */}
-      <header className="bg-brand-darkgray border-b border-black/30 sticky top-0 z-10">
-        <div className="px-6 sm:px-8 h-16 flex items-center justify-between gap-4">
-          <a
-            href="/"
-            className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight hover:text-white/70 transition-colors"
-          >
+      {/* Title block */}
+      <div className="max-w-3xl mx-auto px-6 pt-12 sm:pt-16 pb-2">
+        <a href="/" className="block group">
+          <h1 className="font-display text-5xl sm:text-6xl leading-[1.05] tracking-tight text-brand-darkgray group-hover:text-brand-blue transition-colors">
             Schikkingslessen uit
-            <br className="sm:hidden" />
-            <span className="sm:ml-1">(tucht)rechtspraak</span>
-          </a>
+            <br />
+            <em className="italic">(tucht)rechtspraak</em>
+          </h1>
+        </a>
+      </div>
 
-          {showTokenInput ? (
-            <form
-              onSubmit={handleTokenSubmit}
-              className="flex items-center gap-2 shrink-0"
-            >
-              <input
-                ref={tokenRef}
-                type="password"
-                value={tokenInput}
-                onChange={(e) => setTokenInput(e.target.value)}
-                placeholder="Wachtwoord"
-                className="px-3 py-1.5 text-sm rounded-brand border border-brand-lightgray bg-brand-bg focus:outline-none focus:border-brand-blue w-32"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-brand text-sm font-semibold bg-brand-blue text-white shadow-brand hover:bg-brand-darkgray transition-all duration-200"
-              >
-                <Lock size={12} />
-                Ok
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowTokenInput(false);
-                  setTokenInput("");
-                }}
-                className="text-sm text-brand-darkgray/50 hover:text-brand-darkgray transition-colors px-1"
-              >
-                Annuleer
-              </button>
-            </form>
-          ) : (
-            <button
-              onClick={handleVernieuwClick}
-              disabled={busy}
-              className={`
-                inline-flex items-center gap-2 px-4 py-2 rounded-brand text-sm font-semibold shrink-0
-                transition-all duration-200
-                ${
-                  busy
-                    ? "bg-brand-bg text-brand-darkgray/40 cursor-not-allowed"
-                    : "bg-brand-blue text-white shadow-brand hover:bg-brand-darkgray hover:shadow-brand-hover"
-                }
-              `}
-            >
-              <RefreshCw
-                size={14}
-                className={refreshing ? "animate-spin" : ""}
-              />
-              {refreshing ? "Ophalen…" : ""}
-            </button>
-          )}
-        </div>
-      </header>
-
-      <div className="max-w-3xl mx-auto px-6 py-8">
-        {/* Disclaimer met uitklapbare uitleg */}
+      <div className="max-w-3xl mx-auto px-6 pt-6 pb-8">
+        {/* Intro + disclaimer in één uitklapbare callout */}
         <details
           ref={disclaimerRef}
-          className="text-sm text-brand-darkgray/70 leading-relaxed mb-6 px-4 py-3 bg-brand-bg-blue/60 border border-brand-blue/15 rounded-brand group"
+          className="text-xs text-brand-darkgray/75 leading-relaxed mb-6 px-4 py-3 bg-brand-bg-blue/60 border border-brand-blue/15 rounded-brand group"
         >
           <summary className="cursor-pointer list-none flex items-start gap-2 marker:hidden">
             <Info size={14} className="text-brand-blue shrink-0 mt-0.5" />
             <span>
-              De uitspraken zijn geautomatiseerd opgehaald en samengevat. Lees
-              voordat je je daarop beroept altijd de volledige tekst.
+              SchikkingsDigest verzamelt elke week nieuwe uitspraken uit het
+              Nederlandse civiele recht en het advocatentuchtrecht over schikken
+              en minnelijke regelingen. AI beoordeelt de relevantie en vat de
+              feiten, het oordeel en de praktische les samen. De samenvattingen
+              zijn geautomatiseerd. Lees voordat je je daarop beroept altijd de
+              volledige tekst.
               <span className="ml-1 text-brand-blue font-semibold underline underline-offset-2 group-open:hidden">
                 Hoe werkt dit en wat betekent dat?
               </span>
@@ -617,9 +574,9 @@ export default function Home() {
               Lucas Lieverse
             </a>
             , docent-onderzoeker HBO-Rechten en gepromoveerd op de Nederlandse
-            schikkingspraktijk. Hij geeft trainingen en lezingen aan rechters, advocaten en
-            mediators, en bouwde deze digest om zelf bij te houden wat de
-            (tucht)rechtspraak ons over schikken leert.
+            schikkingspraktijk. Hij geeft trainingen en lezingen aan rechters,
+            advocaten en mediators, en bouwde deze digest om zelf bij te houden
+            wat de (tucht)rechtspraak ons over schikken leert.
           </p>
           <p
             className="text-sm leading-relaxed max-w-xl mb-8"
@@ -665,10 +622,65 @@ export default function Home() {
               color: "hsl(221 100% 93% / 0.45)",
             }}
           >
-            Deze samenvattingen zijn door AI gegenereerd.
+            SchikkingsDigest maakt gebruik van AI. Controleer de output.
           </div>
         </div>
       </footer>
+
+      {/* Admin-only refresh — geactiveerd via ?admin=1, daarna bewaard in localStorage */}
+      {adminMode && (
+        <div className="fixed bottom-4 right-4 z-20">
+          {showTokenInput ? (
+            <form
+              onSubmit={handleTokenSubmit}
+              className="flex items-center gap-2 bg-brand-white border border-brand-lightgray rounded-brand shadow-brand px-3 py-2"
+            >
+              <input
+                ref={tokenRef}
+                type="password"
+                value={tokenInput}
+                onChange={(e) => setTokenInput(e.target.value)}
+                placeholder="Wachtwoord"
+                className="px-2 py-1 text-xs rounded-brand border border-brand-lightgray bg-brand-bg focus:outline-none focus:border-brand-blue w-32"
+              />
+              <button
+                type="submit"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-brand text-xs font-semibold bg-brand-blue text-white hover:bg-brand-darkgray transition-colors"
+              >
+                <Lock size={10} />
+                Ok
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowTokenInput(false);
+                  setTokenInput("");
+                }}
+                className="text-xs text-brand-darkgray/50 hover:text-brand-darkgray transition-colors px-1"
+              >
+                ×
+              </button>
+            </form>
+          ) : (
+            <button
+              onClick={handleVernieuwClick}
+              disabled={busy}
+              title="Vernieuw digest (admin)"
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-brand text-xs font-semibold shadow-brand transition-all duration-200 ${
+                busy
+                  ? "bg-brand-bg text-brand-darkgray/40 cursor-not-allowed"
+                  : "bg-brand-darkgray text-white hover:bg-brand-blue"
+              }`}
+            >
+              <RefreshCw
+                size={12}
+                className={refreshing ? "animate-spin" : ""}
+              />
+              {refreshing ? "Ophalen…" : "Vernieuw"}
+            </button>
+          )}
+        </div>
+      )}
     </main>
   );
 }

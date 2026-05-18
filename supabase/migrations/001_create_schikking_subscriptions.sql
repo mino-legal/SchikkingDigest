@@ -1,4 +1,4 @@
--- SchikkingDigest email subscriptions.
+-- SchikkingsDigest email subscriptions.
 -- Stored in the shared Mino Supabase project, but this agent is open / unauthenticated:
 -- there is no user_id link, email itself is the identity, and tokens prove consent.
 -- Only the service role touches this table; RLS is enabled with no policies.

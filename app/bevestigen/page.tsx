@@ -27,7 +27,7 @@ export default async function BevestigenPage({ searchParams }: Props) {
       <StatusPage title="Je bent ingeschreven" tone="success">
         <p>
           Je inschrijving voor <strong>{subscriber.email}</strong> is bevestigd.
-          Vanaf nu krijg je elke donderdag de wekelijkse SchikkingDigest in je
+          Vanaf nu krijg je elke donderdag de wekelijkse SchikkingsDigest in je
           inbox.
         </p>
       </StatusPage>

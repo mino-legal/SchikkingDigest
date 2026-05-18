@@ -28,6 +28,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['"Instrument Serif"', 'Georgia', 'serif'],
       },
       borderRadius: {
         brand: '12px',

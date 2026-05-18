@@ -1,4 +1,4 @@
-# SchikkingDigest
+# SchikkingsDigest
 
 Een wekelijkse digest van Nederlandse rechtspraak over schikkingen en minnelijke regelingen, samengesteld voor procesjuristen.
 

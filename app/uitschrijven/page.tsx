@@ -31,7 +31,7 @@ export default async function UitschrijvenPage({ searchParams }: Props) {
       <StatusPage title="Je bent uitgeschreven" tone="success">
         <p>
           <strong>{result.email}</strong> is uit de verzendlijst verwijderd. Je krijgt geen
-          SchikkingDigest meer.
+          SchikkingsDigest meer.
         </p>
         <p className="text-sm text-brand-darkgray/60">
           Mocht je later toch weer mee willen doen, schrijf je dan opnieuw in via het formulier.

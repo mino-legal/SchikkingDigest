@@ -108,7 +108,7 @@ function confirmHtml(opts: SendConfirmationOptions): string {
       <div style="background-color:${C.white};border:1px solid ${C.hairline};border-radius:12px;padding:32px;">
         <h1 style="margin:0 0 12px 0;font-size:20px;font-weight:700;color:${C.darkgray};">Bevestig je inschrijving</h1>
         <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;color:${C.mutedText};">
-          Klik op de knop hieronder om je in te schrijven voor de wekelijkse SchikkingDigest. Elke donderdag ontvang je de relevante uitspraken over schikken en minnelijke regelingen.
+          Klik op de knop hieronder om je in te schrijven voor de wekelijkse SchikkingsDigest. Elke donderdag ontvang je de relevante uitspraken over schikken en minnelijke regelingen.
         </p>
         <p style="margin:0 0 24px 0;">
           <a href="${escape(opts.confirmUrl)}" style="display:inline-block;background-color:${C.blue};color:${C.white};text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;font-size:14px;">Bevestig inschrijving</a>
@@ -124,7 +124,7 @@ function confirmHtml(opts: SendConfirmationOptions): string {
 }
 
 function confirmText(opts: SendConfirmationOptions): string {
-  return `Bevestig je inschrijving voor de SchikkingDigest.
+  return `Bevestig je inschrijving voor de SchikkingsDigest.
 
 Klik om te bevestigen:
 ${opts.confirmUrl}
@@ -139,7 +139,7 @@ export async function sendConfirmationEmail(opts: SendConfirmationOptions): Prom
   const { error } = await getResend().emails.send({
     from: fromEmail(),
     to: opts.to,
-    subject: 'Bevestig je inschrijving — SchikkingDigest',
+    subject: 'Bevestig je inschrijving — SchikkingsDigest',
     html: confirmHtml(opts),
     text: confirmText(opts),
   });
@@ -203,12 +203,12 @@ function digestHtml(opts: SendDigestOptions): string {
   const itemsHtml = items.map(itemHtml).join('');
 
   return `<!doctype html>
-<html lang="nl"><head><meta charset="utf-8" /><title>SchikkingDigest</title></head>
+<html lang="nl"><head><meta charset="utf-8" /><title>SchikkingsDigest</title></head>
 <body style="margin:0;padding:0;background-color:${C.bg};font-family:${FONT};">
   <div style="max-width:640px;margin:0 auto;background-color:${C.white};">
     <div style="padding:28px 32px 12px 32px;border-bottom:1px solid ${C.hairline};">
       <p style="margin:0 0 4px 0;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:${C.blue};font-family:${FONT};">
-        SchikkingDigest
+        SchikkingsDigest
       </p>
       <h1 style="margin:0;font-size:22px;font-weight:700;color:${C.darkgray};line-height:1.3;font-family:${FONT};">
         Schikkingslessen uit (tucht)rechtspraak
@@ -256,7 +256,7 @@ Volledige uitspraak: ${i.url}
 `)
         .join('\n---\n\n');
 
-  return `SchikkingDigest — ${periodeLabel}
+  return `SchikkingsDigest — ${periodeLabel}
 ${items.length} relevante ${items.length === 1 ? 'uitspraak' : 'uitspraken'}
 
 ${body}
@@ -272,10 +272,10 @@ ${minoFooterText()}`;
 export async function sendDigestEmail(opts: SendDigestOptions): Promise<void> {
   const lead = opts.items[0]?.headline;
   const subject = lead
-    ? `SchikkingDigest — ${lead}`
+    ? `SchikkingsDigest — ${lead}`
     : opts.items.length === 0
-      ? 'SchikkingDigest — geen nieuwe uitspraken deze week'
-      : 'SchikkingDigest — wekelijkse update';
+      ? 'SchikkingsDigest — geen nieuwe uitspraken deze week'
+      : 'SchikkingsDigest — wekelijkse update';
 
   const { error } = await getResend().emails.send({
     from: fromEmail(),
